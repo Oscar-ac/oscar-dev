@@ -1,0 +1,9 @@
+.hex {
+	margin: -20px 4px 0;
+	width: 104px;
+	height: 104px;
+	background-color: darkgrey;
+	position: relative;
+	transition: transform 600ms;
+	clip-path: polygon(0 25%, 50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%);
+}

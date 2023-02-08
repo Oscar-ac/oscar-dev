@@ -1,0 +1,9 @@
+.hex-container {
+	display: flex;
+	position: fixed;
+	z-index: -2;
+	flex-direction: column;
+	top: -5px;
+	left: -52px;
+	background-color: var(--off-white);
+}

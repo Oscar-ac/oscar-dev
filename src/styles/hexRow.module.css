@@ -1,0 +1,9 @@
+.hex-row {
+	display: flex;
+	flex-direction: row;
+	z-index: 0;
+}
+
+.hex-row:nth-child(2n) {
+	margin-left: 56px;
+}
