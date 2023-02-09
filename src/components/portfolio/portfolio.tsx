@@ -1,22 +1,35 @@
 import Link from 'next/link';
+import {useRouter} from 'next/router';
+import {useContext} from 'react';
+import OscarDevContext from '@/store/OscarDevContext';
+import Card from '@/components/card/card';
 
-const Portfolio = (props:any) => {
+const Portfolio = () => {
+    const ODContext = useContext(OscarDevContext);
+    const router = useRouter();
 
-    // console.log(JSON.stringify(props.children));
+    console.log(ODContext.portfolioPosts);
+    const posts = ODContext.portfolioPosts;
 
-    const details:any = {
-        title: props.children.title.rendered,
-        content: props.children.content.rendered,
-    }
+    // router.events.on('routeChangeComplete', (url, { shallow }) => {
+    //     console.log(`routing to ${url}`, `is shallow routing: ${shallow}`);
+    //     // const n = url.lastIndexOf('/');
+    //     // const result = url.substring(n + 1);
+    //     // ODContext.setSlug(result);
+    //     // console.log(result);    
+    // });
 
     return(
         <>
-        <Link href={{
-            pathname: '/detail',
-            query: details
-        }}>
-            {<div dangerouslySetInnerHTML={{__html: props.children.title.rendered}}/>}
-        </Link>
+            {posts && posts.map((post:any, i:number) => 
+            <Link key={`p-link-${i}`} href={{
+                    pathname: `/detail/${post.slug}`,
+                    // query: details
+                }}>
+                  
+                <Card key={`portfolio-${i}`}>{post.title.rendered}</Card>            
+            </Link>
+            )}
         </>
     );
 }
