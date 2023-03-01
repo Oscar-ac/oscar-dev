@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
-import Portfolio from '@/components/portfolio/portfolio'
+import PortfolioItem from '@/components/portfolio/portfolioItem'
 import Background from '@/components/background/background'
 
 import OscarDevContextProvider from '@/store/OscarDevContextProvider';
@@ -10,8 +10,9 @@ import React, { useEffect, useState } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const Home = () => {
+export default function Home( {portfolioItems}:any ){
 
+  console.log({portfolioItems});
 
   return (
     <>
@@ -22,24 +23,47 @@ const Home = () => {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        {/* <Background /> */}
         <main className={`row ${styles.main}`}>
-          <Portfolio></Portfolio>
+          {portfolioItems.nodes.map( (item: any) => {
+            // return(<h1 key={item.id}>{item.title}</h1>)
+            return(<PortfolioItem  key={item.slug} pItem = {item}/>);
+          })}
         </main>
       </OscarDevContextProvider>
     </>
   )
 }
 
+export async function getStaticProps(){
+  const res = await fetch('http://oscar-dev.online/graphql', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      query: `
+        query getPortfolioItems {
+          portfolioItems {
+            nodes {
+              id
+              slug
+              title
+              featuredImage {
+                node {
+                  altText
+                  sourceUrl
+                }
+              }
+            }
+          }
+        }
+      `
+    }),
+  });
 
-// export async function getServerSideProps() {
-//   const portfolioRes = await fetch('https://oscar-dev.online/staging/4760/wp-json/wp/v2/portfolio/?per_page=99&status=publish');
-//   const portfolioData = await portfolioRes.json();
-//   const postRes = await fetch('https://oscar-dev.online/staging/4760/wp-json/wp/v2/posts/?per_page=99&status=publish&categories=54');
-//   const postData = await postRes.json();
-//   const albumRes = await fetch('https://oscar-dev.online/staging/4760/wp-json/wp/v2/favourite_albums/?per_page=99&status=publish');
-//   const albumsData = await albumRes.json();
-//   return { props: { portfolioData, postData, albumsData } }
-// }  
+  const json = await res.json();
 
-export default Home;
+  return {
+    props: {
+      portfolioItems: json.data.portfolioItems
+    }
+  }
+}
