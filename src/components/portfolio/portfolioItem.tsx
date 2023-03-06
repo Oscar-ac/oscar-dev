@@ -8,10 +8,11 @@ const PortfolioItem = ( props:any ) => {
     // const router = useRouter();
     const post = props.pItem;
 
+
+    // console.log(post);
+
     return(
-        <Link href={`/portfolio/${post.slug}`}>
-            <Card>{post.title}</Card>            
-        </Link>
+        <Card slug={post.slug} image={post.featuredImage} title={post.title}></Card>            
     );
 }
 

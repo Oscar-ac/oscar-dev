@@ -1,8 +1,20 @@
-.main {
+.main{
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
-  padding: 6rem;
-  min-height: 100vh;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+
+
+.gridRow{
+  margin-bottom: -3.75rem;
+  display: flex;
+}
+
+.even-row{
+  /* background: blue; */
+  transform: translate(7.5rem);
+  /* transform: translateY(-12.5rem); */
 }

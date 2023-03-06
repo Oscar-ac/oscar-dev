@@ -61,7 +61,7 @@ export async function getStaticPaths(){
         body: JSON.stringify({
           query: `
             query allPortfolioQuery {
-              portfolioItems {
+              portfolioItems(first:100) {
                 nodes {
                   id
                   slug

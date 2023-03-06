@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Script from 'next/script'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
@@ -12,7 +13,17 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Home( {portfolioItems}:any ){
 
-  console.log({portfolioItems});
+  // console.log({portfolioItems});
+  // var evenRow = true;
+
+
+  const middleIndex = Math.ceil(portfolioItems.nodes.length / 2);
+
+  const firstHalf = portfolioItems.nodes.slice().splice(0, middleIndex);   
+  const secondHalf = portfolioItems.nodes.slice().splice(-middleIndex);
+ 
+  const rowsArrays = [firstHalf, secondHalf];
+  console.log(rowsArrays)
 
   return (
     <>
@@ -23,10 +34,17 @@ export default function Home( {portfolioItems}:any ){
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <main className={`row ${styles.main}`}>
-          {portfolioItems.nodes.map( (item: any) => {
-            // return(<h1 key={item.id}>{item.title}</h1>)
-            return(<PortfolioItem  key={item.slug} pItem = {item}/>);
+        <main className={`${styles.main}`}>
+          {rowsArrays.map( (rowsArray: any, index:number) => {
+            return(
+              <div className={`${styles.gridRow} ${styles[`${(index % 2 === 0 ? '' : 'even-row')}`]}`}>
+                {rowsArray.map( (item: any, index:number) => {
+                  return(
+                    <PortfolioItem  key={item.slug} pItem={item}/>
+                  )
+                })}
+              </div>
+            )
           })}
         </main>
       </OscarDevContextProvider>
@@ -41,7 +59,7 @@ export async function getStaticProps(){
     body: JSON.stringify({
       query: `
         query getPortfolioItems {
-          portfolioItems {
+          portfolioItems(first: 100) {
             nodes {
               id
               slug
