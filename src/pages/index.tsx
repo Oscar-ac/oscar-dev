@@ -9,6 +9,9 @@ import Background from '@/components/background/background'
 import OscarDevContextProvider from '@/store/OscarDevContextProvider';
 import React, { useEffect, useState } from 'react'
 
+import { ScrollContainer } from 'react-indiana-drag-scroll';
+import 'react-indiana-drag-scroll/dist/style.css'
+
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home( {portfolioItems}:any ){
@@ -35,17 +38,21 @@ export default function Home( {portfolioItems}:any ){
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main className={`${styles.main}`}>
-          {rowsArrays.map( (rowsArray: any, index:number) => {
-            return(
-              <div className={`${styles.gridRow} ${styles[`${(index % 2 === 0 ? '' : 'even-row')}`]}`}>
-                {rowsArray.map( (item: any, index:number) => {
-                  return(
-                    <PortfolioItem  key={item.slug} pItem={item}/>
-                  )
-                })}
-              </div>
-            )
-          })}
+          <ScrollContainer className={styles["scroll-container"]}>
+            <div className={styles["portfolio-container"]}>
+              {rowsArrays.map( (rowsArray: any, index:number) => {
+                return(
+                  <div className={`${styles.gridRow} ${styles[`${(index % 2 === 0 ? '' : 'even-row')}`]}`}>
+                    {rowsArray.map( (item: any, index:number) => {
+                      return(
+                        <PortfolioItem  key={item.slug} pItem={item}/>
+                      )
+                    })}
+                  </div>
+                )
+              })}
+            </div>
+          </ScrollContainer>
         </main>
       </OscarDevContextProvider>
     </>

@@ -1,7 +1,7 @@
 :root {
   --bg-color: hsl(237, 0%, 7%);
   --link-color: hsl(0, 0%, 100%);
-  --link-hover-color: hsl(0, 0%, 50%);
+  --link-hover-color: hsl(0, 0%, 100%);
   --transition-quick: 150ms;
   --hex-path: polygon(0 25%, 50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%);
 }
