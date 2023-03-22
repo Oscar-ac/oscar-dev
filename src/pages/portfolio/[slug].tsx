@@ -1,5 +1,6 @@
 import Image from 'next/image';
-
+import Canvas from '@/components/canvas/Canvas'
+import styles from '@/styles/Home.module.css'
 export default function Portfolio( data:any ){
     console.log(data);
     
@@ -10,7 +11,7 @@ export default function Portfolio( data:any ){
             <h1>{post.title}</h1>
             <img alt={post.featuredImage.node.altText} src={post.featuredImage.node.sourceUrl}/>
             <article dangerouslySetInnerHTML={{__html: post.content}}></article>
-            
+            <Canvas className={styles["canvas--full"]}/>
         </div>
     )
 } 
