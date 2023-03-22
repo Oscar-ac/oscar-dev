@@ -1,3 +1,4 @@
+import { getRandomValues } from "crypto";
 import React, {useRef, useEffect} from "react";
 
 export default function Canvas(props:any){
@@ -20,13 +21,18 @@ export default function Canvas(props:any){
         return randomColor
     }
 
-    function getRandomInt(num:number) {
-        let ranNum = (Math.random() * num) * (Math.round(Math.random()) ? 1 : -1)
+    function getRandomInt(num:number, allowNeg:boolean) {
+        let ranNum:number
+        if(allowNeg){
+            ranNum = (Math.random() * num) * (Math.round(Math.random()) ? 1 : -1)
+        } else {
+            ranNum = (Math.random() * num)
+        }
         return ranNum
     }
     
     const x = setInterval(() => {
-        let pointData = {x: mousePos.x, y: mousePos.y, directionX: getRandomInt(1), directionY: getRandomInt(1)}
+        let pointData = {x: mousePos.x, y: mousePos.y, directionX: getRandomInt(1, true), directionY: getRandomInt(1, true)}
         points.push(pointData);
         // console.log(points)
         if (points.length > 25) {
@@ -44,14 +50,14 @@ export default function Canvas(props:any){
         // ctx.fillStyle = `#${getRandomColor()}`
         ctx.fillStyle = '#fff'
         ctx.strokeStyle = '#fff'
-        ctx.lineWidth = 5;
+        ctx.lineWidth = 2;
         ctx.beginPath()
         points.map( (point:any, index:number) => {
             let updatedX = point.x+(frameCount*point.directionX*0.05)
             let updatedY = point.y+(frameCount*point.directionY*0.05)
             ctx.arc(updatedX, updatedY, 1, 0, 2*Math.PI)
-            ctx.moveTo(updatedX, updatedY)
-            ctx.lineTo(updatedX, updatedY)
+            // ctx.moveTo(updatedX, updatedY)
+            // ctx.lineTo(updatedX, updatedY)
             // ctx.arc(point.x, point.y, 1, 0, 2*Math.PI)
             // ctx.moveTo(point.x, point.y)
             // ctx.lineTo(point.x, point.y)
