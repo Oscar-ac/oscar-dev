@@ -3,7 +3,7 @@
     overflow: hidden;
     position: relative;
     /* transform: rotate(-45deg); */
-    clip-path: var(--hex-path);
+    /* clip-path: var(--hex-path); */
     transition: ease-in-out transform var(--transition-quick)
 }
 

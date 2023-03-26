@@ -1,5 +1,5 @@
-import { getRandomValues } from "crypto";
-import React, {useRef, useEffect} from "react";
+import React, {useRef, useEffect} from "react"
+import classes from '@/styles/Cavas.module.css'
 
 export default function Canvas(props:any){
 
@@ -9,8 +9,8 @@ export default function Canvas(props:any){
     let frameCount:number = 0
 
     const updatePos = (event:any) => {
-        mousePos.x = event.pageX
-        mousePos.y = event.pageY
+        mousePos.x = event.clientX
+        mousePos.y = event.clientY
     }
 
     
@@ -36,8 +36,8 @@ export default function Canvas(props:any){
         points.push(pointData);
         // console.log(points)
         if (points.length > 25) {
-            console.log("points limit reached");
-            console.log(points)
+            // console.log("points limit reached");
+            // console.log(points)
             // clearInterval(x)
             frameCount = 0
             points = []
@@ -67,13 +67,18 @@ export default function Canvas(props:any){
 
     // const {draw, ...rest} = props.draw
 
+    const updateSize = (context:any) => {
+        context.canvas.height = window.innerHeight
+        context.canvas.width = window.innerWidth
+    }
+
     useEffect(() => {
         if (canvasRef.current){
             const canvas:any = canvasRef.current
             const context = canvas.getContext('2d')
-            context.canvas.height = window.innerHeight
-            context.canvas.width = window.innerWidth
-            window.addEventListener("mousemove", updatePos, false);
+            updateSize(context)
+            window.addEventListener("resize", () => {updateSize(context)}, false)
+            window.addEventListener("mousemove", updatePos, false)
         
 
             let animationFrameId:any
@@ -96,7 +101,7 @@ export default function Canvas(props:any){
 
 
     return(
-        <canvas className={`${props.className}`} ref={canvasRef} {...props}>
+        <canvas className={`${props.className} ${classes['canvas--full']}`} ref={canvasRef} {...props}>
 
         </canvas>
     );

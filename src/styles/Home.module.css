@@ -4,8 +4,8 @@
   align-items: center;
   flex-wrap: wrap;
   justify-content: center;
-  height: 100vh;
-  overflow: hidden;
+  /* height: 100vh;
+  overflow: hidden; */
 }
 
 .scroll-container{
@@ -32,11 +32,4 @@
   /* background: blue; */
   transform: translate(7.5rem);
   /* transform: translateY(-12.5rem); */
-}
-
-.canvas--full{
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
 }

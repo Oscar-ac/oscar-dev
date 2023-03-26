@@ -8,7 +8,7 @@ const Card = (props:any) => {
     const title = props.title
 
     return (
-        <Link href={`/portfolio/${props.slug}`} className={`${classes["card"]} square`}>
+        <Link href={`/portfolio/${props.slug}`} className={`${classes["card"]} ${props.className} square`}>
             <div className={classes["card--bg"]} style={{backgroundImage: `url(${image.node.sourceUrl})`}}>
                 <div className={classes["card--overlay"]}>
                     <div className={classes["card--title"]}>

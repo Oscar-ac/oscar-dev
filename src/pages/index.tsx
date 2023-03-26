@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
 import PortfolioItem from '@/components/portfolio/portfolioItem'
+import PageHeader from '@/components/content/PageHeader'
 import Canvas from '@/components/canvas/Canvas';
 
 import OscarDevContextProvider from '@/store/OscarDevContextProvider';
@@ -11,7 +12,9 @@ import React, { useEffect, useState } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home( {portfolioItems}:any ){
+export default function Home( {portfolioItems, pageData}:any ){
+  console.log(pageData)
+  // console.log(portfolioItems) 
   return (
     <>
       <OscarDevContextProvider>
@@ -22,13 +25,13 @@ export default function Home( {portfolioItems}:any ){
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main className={`${styles.main}`}>
+          <PageHeader data={pageData}/>
             <div className={styles["portfolio-container"]}>
               {portfolioItems.nodes.map( (item: any, index:number) => {
-                // console.log(item);
                 return(<PortfolioItem key={item.slug} pItem={item}/>)
               })}
             </div>
-          <Canvas className={styles["canvas--full"]}/>
+          <Canvas/>
         </main>
       </OscarDevContextProvider>
     </>
@@ -41,7 +44,7 @@ export async function getStaticProps(){
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       query: `
-        query getPortfolioItems {
+        query homePageContent {
           portfolioItems(first: 100) {
             nodes {
               id
@@ -52,6 +55,17 @@ export async function getStaticProps(){
                   altText
                   sourceUrl
                 }
+              }
+              excerpt
+            }
+          }
+          pageBy(pageId: 5) {
+            content
+            title
+            featuredImage {
+              node {
+                altText
+                sourceUrl
               }
             }
           }
@@ -64,7 +78,8 @@ export async function getStaticProps(){
 
   return {
     props: {
-      portfolioItems: json.data.portfolioItems
+      portfolioItems: json.data.portfolioItems,
+      pageData: json.data.pageBy
     }
   }
 }

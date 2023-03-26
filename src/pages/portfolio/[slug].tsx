@@ -1,18 +1,17 @@
 import Image from 'next/image';
 import Canvas from '@/components/canvas/Canvas'
-import styles from '@/styles/Home.module.css'
+import PortfolioContent from '@/components/portfolio/PortfolioContent'
+
 export default function Portfolio( data:any ){
     console.log(data);
     
     const post  = data.portfolioItem;
     
     return(
-        <div>
-            <h1>{post.title}</h1>
-            <img alt={post.featuredImage.node.altText} src={post.featuredImage.node.sourceUrl}/>
-            <article dangerouslySetInnerHTML={{__html: post.content}}></article>
-            <Canvas className={styles["canvas--full"]}/>
-        </div>
+      <>
+        <PortfolioContent post={post}/>
+        <Canvas/>
+      </>
     )
 } 
 

@@ -1,11 +1,14 @@
-import Card from '@/components/card/card';
+import Card from '@/components/card/card'
+import TextCard from '@/components/card/TextCard'
+import classes from '@/styles/PortfolioItem.module.css'
 
 const PortfolioItem = ( props:any ) => {
-    // const router = useRouter();
     const post = props.pItem;
-    console.log(post);
     return(
-        <Card slug={post.slug} image={post.featuredImage} title={post.title}></Card>            
+        <div className={`${classes['portfolio-item--container']} row`}>
+            <TextCard className={`${classes['portfolio-item--excerpt']} anim col-7`}><div dangerouslySetInnerHTML={{__html: post.excerpt}}></div></TextCard>
+            <Card className="path--hex col-5" slug={post.slug} image={post.featuredImage} title={post.title}/>
+        </div>
     );
 }
 
